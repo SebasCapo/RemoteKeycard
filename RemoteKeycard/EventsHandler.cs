@@ -43,10 +43,7 @@ namespace RemoteKeycard
         {
             try
             {
-                if(ev.Player.TryGetEffect(Exiled.API.Enums.EffectType.Amnesia, out var effect) && effect.Enabled)
-                    return;
-
-                if(!ev.IsAllowed && !ev.Player.Inventory.items.IsEmpty() && ev.Door.NetworkActiveLocks == 0 && ev.Player.CanOpen(ev.Door))
+                if(!ev.IsAllowed && ev.Player.CanOpen(ev.Door))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -68,7 +65,7 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && !ev.Player.Inventory.items.IsEmpty() && ev.Player.CanOpen(Config.Extras.WarheadPanelPermission))
+                if(!ev.IsAllowed && ev.Player.CanOpen(Config.Extras.WarheadPanelPermission))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -89,7 +86,7 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && !ev.Player.Inventory.items.IsEmpty() && ev.Player.CanOpen(Config.Extras.GeneratorPermission))
+                if(!ev.IsAllowed && ev.Player.CanOpen(Config.Extras.GeneratorPermission))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -110,7 +107,7 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && ev.Chamber != null && !ev.Player.Inventory.items.IsEmpty() && ev.Player.CanOpen(ev.Chamber.accessToken))
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.CanOpen(ev.Chamber.accessToken))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
