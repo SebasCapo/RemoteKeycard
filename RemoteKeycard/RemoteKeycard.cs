@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Exiled.API.Features;
-using RemoteKeycard.Config;
 
 namespace RemoteKeycard
 {
+    /// <summary>
+    /// The plugin's core class.
+    /// </summary>
     public class RemoteKeycard : Plugin<Config.Config>
     {
 
@@ -17,14 +15,48 @@ namespace RemoteKeycard
         public static RemoteKeycard Instance { get; private set; }
 
         /// <inheritdoc/>
+        public override string Name => "RemoteKeycard";
+
+        /// <inheritdoc/>
+        public override string Prefix => "remotekeycard";
+
+        /// <inheritdoc/>
+        public override Version RequiredExiledVersion => new Version(2, 10, 0);
+
+        /// <inheritdoc/>
+        public override string Author => "Beryl";
+
+        /// <inheritdoc/>
+        public override Version Version => new Version(0, 1, 0);
+
+        /// <inheritdoc cref="EventsHandler"/>
+        public EventsHandler Handler { get; private set; }
+
+        /// <summary>
+        /// Instance initializer.
+        /// </summary>
+        public RemoteKeycard() => Instance = this;
+
+        /// <inheritdoc/>
         public override void OnEnabled()
         {
-            Instance = this;
-
-
+            Log.Debug("Initializing events...", Config.Extras.DebugMode);
+            Handler = new EventsHandler();
+            Handler.Start();
+            Log.Debug("Events initialized successfully.", Config.Extras.DebugMode);
 
             base.OnEnabled();
         }
 
+        /// <inheritdoc/>
+        public override void OnDisabled()
+        {
+            Log.Debug("Stopping events...", Config.Extras.DebugMode);
+            Handler.Stop();
+            Handler = null;
+            Log.Debug("Events stopped successfully.", Config.Extras.DebugMode);
+
+            base.OnDisabled();
+        }
     }
 }

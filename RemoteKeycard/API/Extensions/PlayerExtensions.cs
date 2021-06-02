@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Interactables.Interobjects.DoorUtils;
@@ -22,7 +19,7 @@ namespace RemoteKeycard.API.Extensions
         /// <param name="player"><see cref="Player"/> trying to open the door.</param>
         /// <param name="perm">The raw permission for a keycard.</param>
         /// <returns>Whether the player has the requiered keycard.</returns>
-        public static bool CanOpen(this Player player, string perm)
+        public static bool HasKeycardPermission(this Player player, string perm)
         {
             if(string.IsNullOrEmpty(perm))
                 return false;
@@ -40,7 +37,7 @@ namespace RemoteKeycard.API.Extensions
                     }
                 } catch(Exception e)
                 {
-                    Log.Debug($"{nameof(CanOpen)}(string): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                    Log.Debug($"{nameof(HasKeycardPermission)}(string): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
                 }
             }
 
@@ -53,11 +50,11 @@ namespace RemoteKeycard.API.Extensions
         /// <param name="player"><see cref="Player"/> trying to open the door.</param>
         /// <param name="door">The <see cref="DoorVariant"/> that's being opened/closed.</param>
         /// <returns>Whether the player has the requiered keycard.</returns>
-        public static bool CanOpen(this Player player, DoorVariant door)
+        public static bool HasKeycardPermission(this Player player, DoorVariant door)
         {
             if(door?.RequiredPermissions == null || door.NetworkActiveLocks == 0)
                 return false;
-
+            
             if(Config.AmnesiaMatters && player.TryGetEffect(Exiled.API.Enums.EffectType.Amnesia, out var effect) && effect.Enabled)
                 return false;
 
@@ -71,7 +68,7 @@ namespace RemoteKeycard.API.Extensions
                     }
                 } catch(Exception e)
                 {
-                    Log.Debug($"{nameof(CanOpen)}(DoorVariant): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                    Log.Debug($"{nameof(HasKeycardPermission)}(DoorVariant): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
                 }
             }
 

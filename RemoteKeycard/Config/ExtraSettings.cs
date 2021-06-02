@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace RemoteKeycard.Config 
+namespace RemoteKeycard.Config
 {
     /// <summary>
     /// Settings that most users probably won't care about.

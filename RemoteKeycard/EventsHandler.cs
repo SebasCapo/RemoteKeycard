@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Linq;
-using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
-using Interactables.Interobjects.DoorUtils;
 using RemoteKeycard.API.Extensions;
 using RemoteKeycard.Handlers;
 using Players = Exiled.Events.Handlers.Player;
@@ -43,7 +40,10 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && ev.Player.CanOpen(ev.Door))
+                if(!Config.AffectDoors)
+                    return;
+
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -65,7 +65,10 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && ev.Player.CanOpen(Config.Extras.WarheadPanelPermission))
+                if(!Config.AffectWarheadPanel)
+                    return;
+
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(Config.Extras.WarheadPanelPermission))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -86,7 +89,10 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && ev.Player.CanOpen(Config.Extras.GeneratorPermission))
+                if(!Config.AffectGenerators)
+                    return;
+
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(Config.Extras.GeneratorPermission))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -107,7 +113,10 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.CanOpen(ev.Chamber.accessToken))
+                if(!Config.AffectScpLockers)
+                    return;
+
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.accessToken))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
