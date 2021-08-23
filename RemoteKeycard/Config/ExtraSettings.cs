@@ -14,15 +14,9 @@ namespace RemoteKeycard.Config
         public bool DebugMode { get; set; } = false;
 
         /// <summary>
-        /// Gets whether debug messages should be shown.
+        /// Whether the events system will be functional.
         /// </summary>
-        [Description("Toggle on/off debug messages.")]
-        public string WarheadPanelPermission { get; set; } = "CONT_LVL_3";
-
-        /// <summary>
-        /// Gets whether debug messages should be shown.
-        /// </summary>
-        [Description("Toggle on/off debug messages.")]
-        public string GeneratorPermission { get; set; } = "ARMORY_LVL_2";
+        [Description("Toggle the events system on/off. (Feel free to set this to true if none of your plugins use RemoteKeycard's API, which likely is the case)")]
+        public bool DisableEvents { get; set; } = false;
     }
 }

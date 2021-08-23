@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using CustomPlayerEffects;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Interactables.Interobjects.DoorUtils;
 
 namespace RemoteKeycard.API.Extensions
@@ -16,63 +18,15 @@ namespace RemoteKeycard.API.Extensions
         /// <summary>
         /// Checks whether the player has a keycard of a specific permission.
         /// </summary>
-        /// <param name="player"><see cref="Player"/> trying to open the door.</param>
-        /// <param name="perm">The raw permission for a keycard.</param>
+        /// <param name="player"><see cref="Player"/> trying to interact.</param>
+        /// <param name="permissions">The permission that's gonna be searched for.</param>
         /// <returns>Whether the player has the requiered keycard.</returns>
-        public static bool HasKeycardPermission(this Player player, string perm)
+        public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions)
         {
-            if(string.IsNullOrEmpty(perm))
+            if(Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
                 return false;
 
-            if(Config.AmnesiaMatters && player.TryGetEffect(Exiled.API.Enums.EffectType.Amnesia, out var effect) && effect.Enabled)
-                return false;
-
-            foreach(var item in player.Inventory.items.ToList())
-            {
-                try
-                {
-                    if(item.id.IsKeycard() && player.Inventory.GetItemByID(item.id).permissions.Contains(perm))
-                    {
-                        return true;
-                    }
-                } catch(Exception e)
-                {
-                    Log.Debug($"{nameof(HasKeycardPermission)}(string): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Checks whether the player can open/close a specific door.
-        /// </summary>
-        /// <param name="player"><see cref="Player"/> trying to open the door.</param>
-        /// <param name="door">The <see cref="DoorVariant"/> that's being opened/closed.</param>
-        /// <returns>Whether the player has the requiered keycard.</returns>
-        public static bool HasKeycardPermission(this Player player, DoorVariant door)
-        {
-            if(door?.RequiredPermissions == null || door.NetworkActiveLocks == 0)
-                return false;
-            
-            if(Config.AmnesiaMatters && player.TryGetEffect(Exiled.API.Enums.EffectType.Amnesia, out var effect) && effect.Enabled)
-                return false;
-
-            foreach(var item in player.Inventory.items.ToList())
-            {
-                try
-                {
-                    if(item.id.IsKeycard() && door.RequiredPermissions.CheckPermissions(item.id, player.ReferenceHub))
-                    {
-                        return true;
-                    }
-                } catch(Exception e)
-                {
-                    Log.Debug($"{nameof(HasKeycardPermission)}(DoorVariant): {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
-                }
-            }
-
-            return false;
+            return player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(permissions));
         }
     }
 }

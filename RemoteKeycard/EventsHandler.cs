@@ -1,6 +1,7 @@
 ﻿using System;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using Interactables.Interobjects.DoorUtils;
 using RemoteKeycard.API.Extensions;
 using RemoteKeycard.Handlers;
 using Players = Exiled.Events.Handlers.Player;
@@ -43,7 +44,7 @@ namespace RemoteKeycard
                 if(!Config.AffectDoors)
                     return;
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door))
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -68,7 +69,7 @@ namespace RemoteKeycard
                 if(!Config.AffectWarheadPanel)
                     return;
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(Config.Extras.WarheadPanelPermission))
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -92,7 +93,7 @@ namespace RemoteKeycard
                 if(!Config.AffectGenerators)
                     return;
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(Config.Extras.GeneratorPermission))
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator._requiredPermission))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -116,7 +117,7 @@ namespace RemoteKeycard
                 if(!Config.AffectScpLockers)
                     return;
 
-                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.accessToken))
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
                 {
                     var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
