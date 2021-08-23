@@ -46,12 +46,15 @@ namespace RemoteKeycard
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
                 {
-                    var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                    if(Config.Extras.DisableEvents)
+                    {
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
-                    Events.OnUsingKeycard(_ev);
+                        Events.OnUsingKeycard(_ev);
 
-                    if(!_ev.IsAllowed)
-                        return;
+                        if(!_ev.IsAllowed)
+                            return;
+                    }
 
                     ev.IsAllowed = true;
                 }
@@ -71,12 +74,15 @@ namespace RemoteKeycard
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead))
                 {
-                    var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                    if(Config.Extras.DisableEvents)
+                    {
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
-                    Events.OnUsingKeycard(_ev);
+                        Events.OnUsingKeycard(_ev);
 
-                    if(!_ev.IsAllowed)
-                        return;
+                        if(!_ev.IsAllowed)
+                            return;
+                    }
 
                     ev.IsAllowed = true;
                 }
@@ -95,12 +101,15 @@ namespace RemoteKeycard
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator._requiredPermission))
                 {
-                    var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                    if(Config.Extras.DisableEvents)
+                    {
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
-                    Events.OnUsingKeycard(_ev);
+                        Events.OnUsingKeycard(_ev);
 
-                    if(!_ev.IsAllowed)
-                        return;
+                        if(!_ev.IsAllowed)
+                            return;
+                    }
 
                     ev.IsAllowed = true;
                 }
@@ -119,12 +128,15 @@ namespace RemoteKeycard
 
                 if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
                 {
-                    var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                    if(Config.Extras.DisableEvents)
+                    {
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
-                    Events.OnUsingKeycard(_ev);
+                        Events.OnUsingKeycard(_ev);
 
-                    if(!_ev.IsAllowed)
-                        return;
+                        if(!_ev.IsAllowed)
+                            return;
+                    }
 
                     ev.IsAllowed = true;
                 }
