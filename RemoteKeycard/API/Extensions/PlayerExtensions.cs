@@ -26,7 +26,7 @@ namespace RemoteKeycard.API.Extensions
             if(Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
                 return false;
 
-            return player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(permissions));
+            return player.Items.Any(item => item is Keycard keycard && ((KeycardPermissions) keycard.Permissions).HasFlag(permissions));
         }
     }
 }
