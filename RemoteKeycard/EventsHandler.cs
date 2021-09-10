@@ -13,7 +13,13 @@ namespace RemoteKeycard
     /// </summary>
     public class EventsHandler
     {
-        private Config.Config Config => RemoteKeycard.Instance.Config;
+        private Config.Config config;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventsHandler"/> class.
+        /// </summary>
+        /// <param name="config">The <see cref="Config.Config"/> settings that will be used.</param>
+        public EventsHandler(Config.Config config) => this.config = config;
 
         /// <summary>
         /// Registers all events used.
@@ -41,12 +47,12 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!Config.AffectDoors)
+                if(!config.AffectDoors)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
                 {
-                    if(Config.Extras.DisableEvents)
+                    if(config.Extras.EnableEvents)
                     {
                         var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -61,7 +67,7 @@ namespace RemoteKeycard
 
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                Log.Debug($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
             }
         }
 
@@ -69,12 +75,12 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!Config.AffectWarheadPanel)
+                if(!config.AffectWarheadPanel)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead))
                 {
-                    if(Config.Extras.DisableEvents)
+                    if(config.Extras.EnableEvents)
                     {
                         var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -88,7 +94,7 @@ namespace RemoteKeycard
                 }
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
             }
         }
 
@@ -96,12 +102,12 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!Config.AffectGenerators)
+                if(!config.AffectGenerators)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator._requiredPermission))
                 {
-                    if(Config.Extras.DisableEvents)
+                    if(config.Extras.EnableEvents)
                     {
                         var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -115,7 +121,7 @@ namespace RemoteKeycard
                 }
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                Log.Debug($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
             }
         }
 
@@ -123,12 +129,12 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!Config.AffectScpLockers)
+                if(!config.AffectScpLockers)
                     return;
 
                 if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
                 {
-                    if(Config.Extras.DisableEvents)
+                    if(config.Extras.EnableEvents)
                     {
                         var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
 
@@ -142,7 +148,7 @@ namespace RemoteKeycard
                 }
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}", Config.Extras.DebugMode);
+                Log.Debug($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
             }
         }
     }

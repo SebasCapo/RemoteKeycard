@@ -5,6 +5,7 @@ using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Interactables.Interobjects.DoorUtils;
+using ExiledPermissions = Exiled.API.Enums.KeycardPermissions;
 
 namespace RemoteKeycard.API.Extensions
 {
@@ -13,8 +14,6 @@ namespace RemoteKeycard.API.Extensions
     /// </summary>
     public static class PlayerExtensions
     {
-        private static Config.Config Config => RemoteKeycard.Instance.Config;
-
         /// <summary>
         /// Checks whether the player has a keycard of a specific permission.
         /// </summary>
@@ -23,10 +22,10 @@ namespace RemoteKeycard.API.Extensions
         /// <returns>Whether the player has the requiered keycard.</returns>
         public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions)
         {
-            if(Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
+            if(RemoteKeycard.Instance.Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
                 return false;
 
-            return player.Items.Any(item => item is Keycard keycard && ((KeycardPermissions) keycard.Permissions).HasFlag(permissions));
+            return player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
         }
     }
 }

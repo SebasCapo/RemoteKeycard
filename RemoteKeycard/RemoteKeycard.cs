@@ -27,7 +27,7 @@ namespace RemoteKeycard
         public override string Author => "Beryl";
 
         /// <inheritdoc/>
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(3, 0, 0);
 
         /// <inheritdoc cref="EventsHandler"/>
         public EventsHandler Handler { get; private set; }
@@ -41,7 +41,7 @@ namespace RemoteKeycard
         public override void OnEnabled()
         {
             Log.Debug("Initializing events...", Config.Extras.DebugMode);
-            Handler = new EventsHandler();
+            Handler = new EventsHandler(Config);
             Handler.Start();
             Log.Debug("Events initialized successfully.", Config.Extras.DebugMode);
 
