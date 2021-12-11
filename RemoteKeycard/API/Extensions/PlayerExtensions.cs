@@ -16,13 +16,16 @@ namespace RemoteKeycard.API.Extensions
         /// </summary>
         /// <param name="player"><see cref="Player"/> trying to interact.</param>
         /// <param name="permissions">The permission that's gonna be searched for.</param>
+        /// <param name="requiresAllPermissions">Whether all permissions are required.</param>
         /// <returns>Whether the player has the required keycard.</returns>
-        public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions)
+        public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions, bool requiresAllPermissions = false)
         {
-            if(RemoteKeycard.Instance.Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
+            if (RemoteKeycard.Instance.Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
                 return false;
 
-            return player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
+            return requiresAllPermissions ?
+                player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlagFast(permissions))
+                : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace RemoteKeycard
     /// </summary>
     public class EventsHandler
     {
-        private Config.Config config;
+        private readonly Config.Config config;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventsHandler"/> class.
@@ -132,7 +132,7 @@ namespace RemoteKeycard
                 if(!config.AffectScpLockers)
                     return;
 
-                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true))
                 {
                     if(config.Extras.EnableEvents)
                     {

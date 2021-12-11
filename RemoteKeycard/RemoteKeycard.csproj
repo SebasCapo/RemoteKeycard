@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EXILED" Version="3.0.0-alpha.83" />
+    <PackageReference Include="EXILED" Version="4.1.5" />
   </ItemGroup>
 
   <ItemGroup>
