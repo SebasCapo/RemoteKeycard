@@ -3,7 +3,7 @@
 <a href="https://discord.gg/PyUkWTg"><img src="https://img.shields.io/discord/656673194693885975?color=%23aa0000&label=EXILED" alt="Support"></a>
 
 # RemoteKeycard
-An Exiled 3.0 (SCP:SL) Plugin that allows you to use your keycards without the need of having them on your hand all the time.
+An Exiled (SCP:SL) Plugin that allows you to use your keycards without the need of having them on your hand all the time.
 
 **Planned Features:**
 - Make Alpha Warhead functionality actually work
