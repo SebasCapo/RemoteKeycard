@@ -54,7 +54,7 @@ namespace RemoteKeycard
                 {
                     if(config.Extras.EnableEvents)
                     {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
 
                         Events.OnUsingKeycard(_ev);
 
@@ -82,7 +82,7 @@ namespace RemoteKeycard
                 {
                     if(config.Extras.EnableEvents)
                     {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
 
                         Events.OnUsingKeycard(_ev);
 
@@ -109,7 +109,7 @@ namespace RemoteKeycard
                 {
                     if(config.Extras.EnableEvents)
                     {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
 
                         Events.OnUsingKeycard(_ev);
 
@@ -136,7 +136,7 @@ namespace RemoteKeycard
                 {
                     if(config.Extras.EnableEvents)
                     {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player);
+                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
 
                         Events.OnUsingKeycard(_ev);
 

@@ -8,10 +8,11 @@ namespace RemoteKeycard.API.EventArgs
     public class UsingKeycardEventArgs : System.EventArgs
     {
         /// <inheritdoc/>
-        public UsingKeycardEventArgs(Player player, bool isAllowed = true)
+        public UsingKeycardEventArgs(Player player, System.EventArgs originalEvent, bool isAllowed = true)
         {
             Player = player;
             IsAllowed = isAllowed;
+            OriginalEvent = originalEvent;
         }
 
         /// <summary>
@@ -23,5 +24,10 @@ namespace RemoteKeycard.API.EventArgs
         /// Gets or sets whether the object is unlocked.
         /// </summary>
         public bool IsAllowed { get; set; }
+
+        /// <summary>
+        /// Gets the original Exiled <see cref="System.EventArgs"/> this is tied to.
+        /// </summary>
+        public System.EventArgs OriginalEvent { get; }
     }
 }
