@@ -105,7 +105,7 @@ namespace RemoteKeycard
                 if(!config.AffectGenerators)
                     return;
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.ArmoryLevelTwo))
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
                 {
                     if(config.Extras.EnableEvents)
                     {
