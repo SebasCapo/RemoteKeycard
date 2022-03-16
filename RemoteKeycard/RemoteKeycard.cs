@@ -21,13 +21,13 @@ namespace RemoteKeycard
         public override string Prefix => "remotekeycard";
 
         /// <inheritdoc/>
-        public override Version RequiredExiledVersion => new Version(4, 1, 0);
+        public override Version RequiredExiledVersion => new Version(5, 0, 0);
 
         /// <inheritdoc/>
         public override string Author => "Beryl";
 
         /// <inheritdoc/>
-        public override Version Version => new Version(3, 1, 0);
+        public override Version Version => new Version(3, 1, 1);
 
         /// <inheritdoc cref="EventsHandler"/>
         public EventsHandler Handler { get; private set; }
