@@ -27,7 +27,7 @@ namespace RemoteKeycard
         public override string Author => "Beryl";
 
         /// <inheritdoc/>
-        public override Version Version => new Version(3, 1, 1);
+        public override Version Version => new Version(3, 1, 2);
 
         /// <inheritdoc cref="EventsHandler"/>
         public EventsHandler Handler { get; private set; }
