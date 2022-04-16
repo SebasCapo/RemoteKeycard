@@ -24,7 +24,7 @@ namespace RemoteKeycard
         public override Version RequiredExiledVersion => new Version(5, 0, 0);
 
         /// <inheritdoc/>
-        public override string Author => "Beryl";
+        public override string Author => "Beryl (Maintained by Parkeymon)";
 
         /// <inheritdoc/>
         public override Version Version => new Version(3, 1, 2);
