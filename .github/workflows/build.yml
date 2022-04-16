@@ -1,0 +1,54 @@
+﻿name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  EXILED_REFERENCES_PATH: ${{ github.workspace }}/RemoteKeycard/lib
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Nuget
+        uses: iRebbok/setup-nuget@master
+
+      - name: Restore Packages
+        run: nuget restore RemoteKeycard.sln
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Download references
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: 'https://www.exiled.host/build_deps/References.zip'
+          file-name: 'References.zip'
+
+      - name: Download 7zip
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: 'https://www.exiled.host/7za.exe'
+          file-name: '7zip.exe'
+
+      - name: Extract Refs
+        run: ./7zip.exe e References.zip -oRemoteKeycard/lib/ -r -y
+
+      - name: Build
+        env:
+          EXILED_REFERENCES: ${{ env.EXILED_REFERENCES_PATH }}
+        run: msbuild RemoteKeycard.sln -p:Configuration=release
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: Plugin DLL
+          path: RemoteKeycard\bin\Release\RemoteKeycard*.dll
