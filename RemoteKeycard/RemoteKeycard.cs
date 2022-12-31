@@ -1,5 +1,6 @@
 ﻿using System;
 using Exiled.API.Features;
+using Players = Exiled.Events.Handlers.Player;
 
 namespace RemoteKeycard
 {
@@ -30,13 +31,13 @@ namespace RemoteKeycard
         public override Version Version => new Version(3, 1, 3);
 
         /// <inheritdoc cref="EventsHandler"/>
-        public EventsHandler Handler { get; private set; }
+        private EventsHandler Handler { get; set; }
 
         /// <summary>
         /// Instance initializer.
         /// </summary>
         public RemoteKeycard() => Instance = this;
-
+        
         /// <inheritdoc/>
         public override void OnEnabled()
         {

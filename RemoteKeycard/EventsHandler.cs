@@ -25,6 +25,7 @@ namespace RemoteKeycard
         /// </summary>
         public void Start()
         {
+            Log.Debug("Registering Events");
             Players.InteractingDoor += OnDoorInteract;
             Players.UnlockingGenerator += OnGeneratorUnlock;
             Players.InteractingLocker += OnLockerInteract;
@@ -44,13 +45,24 @@ namespace RemoteKeycard
 
         private void OnDoorInteract(InteractingDoorEventArgs ev)
         {
+            Log.Debug("Door Interact Event");
             try
             {
+                Log.Debug("Log 3");
                 if(!_config.AffectDoors)
                     return;
+                
+                Log.Debug("Log 4");
+                
+                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions)}");
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
-                    ev.IsAllowed = true;
+                // Temporary workaround because funni sexiled
+                if (ev.Door.RequiredPermissions.RequiredPermissions != KeycardPermissions.None 
+                    && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
+                    _ = ev.Door.IsOpen ? ev.Door.IsOpen = false : ev.Door.IsOpen = true;
+
+                // if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
+                //     ev.IsAllowed = true;
 
             } catch(Exception e)
             {
@@ -60,14 +72,17 @@ namespace RemoteKeycard
 
         private void OnWarheadUnlock(ActivatingWarheadPanelEventArgs ev)
         {
+            Log.Debug("Warhead Unlock Event");
             try
             {
                 if(!_config.AffectWarheadPanel)
                     return;
 
+                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead)}");
+                
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead))
                     ev.IsAllowed = true;
-                
+
             } catch(Exception e)
             {
                 if (_config.ShowExceptions) Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}");
@@ -76,13 +91,17 @@ namespace RemoteKeycard
 
         private void OnGeneratorUnlock(UnlockingGeneratorEventArgs ev)
         {
+            Log.Debug("Generator Unlock Event 1");
             try
             {
                 if(!_config.AffectGenerators)
                     return;
 
-                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
-                    ev.IsAllowed = true;
+                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission)}");
+
+                
+                // if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
+                //     ev.IsAllowed = true;
                 
             } catch(Exception e)
             {
@@ -92,13 +111,17 @@ namespace RemoteKeycard
 
         private void OnLockerInteract(InteractingLockerEventArgs ev)
         {
+            Log.Debug("Locker Interact Event");
             try
             {
                 if(!_config.AffectScpLockers)
                     return;
 
-                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true))
-                    ev.IsAllowed = true;
+                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions)}");
+                
+                // Certified sexiled moment true/false is flipped for this lmao
+                if(ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+                    ev.IsAllowed = false;
                 
             } catch(Exception e)
             {

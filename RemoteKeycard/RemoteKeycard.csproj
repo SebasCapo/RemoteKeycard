@@ -11,6 +11,9 @@
     <Platforms>AnyCPU;x64</Platforms>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile />
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EXILED" Version="6.0.0-beta.17" />
