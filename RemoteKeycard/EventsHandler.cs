@@ -1,5 +1,6 @@
 ﻿using System;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using Interactables.Interobjects.DoorUtils;
 using RemoteKeycard.Extensions;
@@ -54,12 +55,15 @@ namespace RemoteKeycard
                 
                 Log.Debug("Log 4");
                 
-                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions)}");
+                Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions)}, Current Item: ${ev.Player.CurrentItem}");
 
-                // Temporary workaround because funni sexiled
+                if (ev.Player.CurrentItem != null && ev.Player.CurrentItem.IsKeycard)
+                    return;
+
+                    // Temporary workaround because funni sexiled
                 if (ev.Door.RequiredPermissions.RequiredPermissions != KeycardPermissions.None 
                     && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
-                    _ = ev.Door.IsOpen ? ev.Door.IsOpen = false : ev.Door.IsOpen = true;
+                    ev.Door.IsOpen = !ev.Door.IsOpen;
 
                 // if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
                 //     ev.IsAllowed = true;
