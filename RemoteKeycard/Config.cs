@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
 
-namespace RemoteKeycard.Config
+namespace RemoteKeycard
 {
     /// <summary>
     /// The plugin's main config file.
@@ -10,6 +10,11 @@ namespace RemoteKeycard.Config
     {
         /// <inheritdoc/>
         public bool IsEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Gets whether debug messages should be shown.
+        /// </summary>
+        public bool Debug { get; set; } = false;
 
         /// <summary>
         /// Whether Amnesia affects the usage of keycards.
@@ -41,8 +46,10 @@ namespace RemoteKeycard.Config
         [Description("Whether this plugin works on doors.")]
         public bool AffectDoors { get; set; } = true;
 
-        /// <inheritdoc cref="ExtraSettings" path="//*[not(self::remarks)]"/>
-        [Description("These are some extra settings, mainly for developers, testing and curious people.")]
-        public ExtraSettings Extras { get; set; } = new ExtraSettings();
+        /// <summary>
+        /// Gets whether exceptions should be shown.
+        /// </summary>
+        [Description("Toggle on/off exceptions/errors in console. (Enable this before reporting ANY bugs)")]
+        public bool ShowExceptions { get; set; } = false;
     }
 }

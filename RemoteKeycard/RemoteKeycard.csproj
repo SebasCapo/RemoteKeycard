@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>RemoteKeycard</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Authors>Beryl</Authors>
     <Version>1.0.0</Version>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EXILED" Version="5.2.1" />
+    <PackageReference Include="EXILED" Version="6.0.0-beta.17" />
   </ItemGroup>
 
   <ItemGroup>

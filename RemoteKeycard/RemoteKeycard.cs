@@ -6,7 +6,7 @@ namespace RemoteKeycard
     /// <summary>
     /// The plugin's core class.
     /// </summary>
-    public class RemoteKeycard : Plugin<Config.Config>
+    public class RemoteKeycard : Plugin<Config>
     {
 
         /// <summary>
@@ -40,10 +40,10 @@ namespace RemoteKeycard
         /// <inheritdoc/>
         public override void OnEnabled()
         {
-            Log.Debug("Initializing events...", Config.Extras.DebugMode);
+            if (Config.Debug) Log.Debug("Initializing events...");
             Handler = new EventsHandler(Config);
             Handler.Start();
-            Log.Debug("Events initialized successfully.", Config.Extras.DebugMode);
+            if (Config.Debug) Log.Debug("Events initialized successfully.");
 
             base.OnEnabled();
         }
@@ -51,10 +51,10 @@ namespace RemoteKeycard
         /// <inheritdoc/>
         public override void OnDisabled()
         {
-            Log.Debug("Stopping events...", Config.Extras.DebugMode);
+            if (Config.Debug) Log.Debug("Stopping events...");
             Handler.Stop();
             Handler = null;
-            Log.Debug("Events stopped successfully.", Config.Extras.DebugMode);
+            if (Config.Debug) Log.Debug("Events stopped successfully.");
 
             base.OnDisabled();
         }

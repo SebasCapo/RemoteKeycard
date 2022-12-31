@@ -1,9 +1,8 @@
 ﻿using System;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 using Interactables.Interobjects.DoorUtils;
-using RemoteKeycard.API.Extensions;
-using RemoteKeycard.Handlers;
+using RemoteKeycard.Extensions;
 using Players = Exiled.Events.Handlers.Player;
 
 namespace RemoteKeycard
@@ -13,13 +12,13 @@ namespace RemoteKeycard
     /// </summary>
     public class EventsHandler
     {
-        private readonly Config.Config config;
+        private readonly Config _config;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventsHandler"/> class.
         /// </summary>
-        /// <param name="config">The <see cref="Config.Config"/> settings that will be used.</param>
-        public EventsHandler(Config.Config config) => this.config = config;
+        /// <param name="config">The <see cref="Config"/> settings that will be used.</param>
+        public EventsHandler(Config config) => _config = config;
 
         /// <summary>
         /// Registers all events used.
@@ -47,27 +46,15 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!config.AffectDoors)
+                if(!_config.AffectDoors)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
-                {
-                    if(config.Extras.EnableEvents)
-                    {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
-
-                        Events.OnUsingKeycard(_ev);
-
-                        if(!_ev.IsAllowed)
-                            return;
-                    }
-
                     ev.IsAllowed = true;
-                }
 
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
+                if (_config.ShowExceptions) Log.Debug($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -75,26 +62,15 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!config.AffectWarheadPanel)
+                if(!_config.AffectWarheadPanel)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(KeycardPermissions.AlphaWarhead))
-                {
-                    if(config.Extras.EnableEvents)
-                    {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
-
-                        Events.OnUsingKeycard(_ev);
-
-                        if(!_ev.IsAllowed)
-                            return;
-                    }
-
                     ev.IsAllowed = true;
-                }
+                
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
+                if (_config.ShowExceptions) Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -102,26 +78,15 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!config.AffectGenerators)
+                if(!_config.AffectGenerators)
                     return;
 
                 if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
-                {
-                    if(config.Extras.EnableEvents)
-                    {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
-
-                        Events.OnUsingKeycard(_ev);
-
-                        if(!_ev.IsAllowed)
-                            return;
-                    }
-
                     ev.IsAllowed = true;
-                }
+                
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
+                if (_config.ShowExceptions) Log.Debug($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -129,26 +94,15 @@ namespace RemoteKeycard
         {
             try
             {
-                if(!config.AffectScpLockers)
+                if(!_config.AffectScpLockers)
                     return;
 
                 if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true))
-                {
-                    if(config.Extras.EnableEvents)
-                    {
-                        var _ev = new API.EventArgs.UsingKeycardEventArgs(ev.Player, ev);
-
-                        Events.OnUsingKeycard(_ev);
-
-                        if(!_ev.IsAllowed)
-                            return;
-                    }
-
                     ev.IsAllowed = true;
-                }
+                
             } catch(Exception e)
             {
-                Log.Debug($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}", config.Extras.ShowExceptions);
+                if (_config.ShowExceptions) Log.Debug($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}");
             }
         }
     }

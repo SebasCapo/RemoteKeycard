@@ -4,7 +4,7 @@ using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Interactables.Interobjects.DoorUtils;
 
-namespace RemoteKeycard.API.Extensions
+namespace RemoteKeycard.Extensions
 {
     /// <summary>
     /// A set of extensions used in this plugin.
@@ -20,7 +20,7 @@ namespace RemoteKeycard.API.Extensions
         /// <returns>Whether the player has the required keycard.</returns>
         public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions, bool requiresAllPermissions = false)
         {
-            if (RemoteKeycard.Instance.Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
+            if (RemoteKeycard.Instance.Config.AmnesiaMatters && player.IsEffectActive<AmnesiaVision>())
                 return false;
 
             return requiresAllPermissions ?
