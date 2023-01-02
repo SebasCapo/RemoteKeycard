@@ -20,11 +20,9 @@ namespace RemoteKeycard.Extensions
         /// <returns>Whether the player has the required keycard.</returns>
         public static bool HasKeycardPermission(this Player player, KeycardPermissions permissions, bool requiresAllPermissions = false)
         {
-            Log.Debug("Log 1");
             if (RemoteKeycard.Instance.Config.AmnesiaMatters && player.IsEffectActive<AmnesiaVision>())
                 return false;
 
-            Log.Debug("Log 2");
             return requiresAllPermissions ?
                 player.Items.Any(item => item is Keycard keycard && keycard.Permissions.HasFlag(permissions))
                 : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);

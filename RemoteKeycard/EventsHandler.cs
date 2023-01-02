@@ -49,28 +49,17 @@ namespace RemoteKeycard
             Log.Debug("Door Interact Event");
             try
             {
-                Log.Debug("Log 3");
                 if(!_config.AffectDoors)
                     return;
                 
-                Log.Debug("Log 4");
-                
                 Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions)}, Current Item: ${ev.Player.CurrentItem}");
 
-                if (ev.Player.CurrentItem != null && ev.Player.CurrentItem.IsKeycard)
-                    return;
-
-                    // Temporary workaround because funni sexiled
-                if (ev.Door.RequiredPermissions.RequiredPermissions != KeycardPermissions.None 
-                    && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
-                    ev.Door.IsOpen = !ev.Door.IsOpen;
-
-                // if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
-                //     ev.IsAllowed = true;
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Door.RequiredPermissions.RequiredPermissions))
+                    ev.IsAllowed = true;
 
             } catch(Exception e)
             {
-                if (_config.ShowExceptions) Log.Debug($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}");
+                if (_config.ShowExceptions) Log.Warn($"{nameof(OnDoorInteract)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -89,13 +78,13 @@ namespace RemoteKeycard
 
             } catch(Exception e)
             {
-                if (_config.ShowExceptions) Log.Debug($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}");
+                if (_config.ShowExceptions) Log.Warn($"{nameof(OnWarheadUnlock)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
         private void OnGeneratorUnlock(UnlockingGeneratorEventArgs ev)
         {
-            Log.Debug("Generator Unlock Event 1");
+            Log.Debug("Generator Unlock Event");
             try
             {
                 if(!_config.AffectGenerators)
@@ -103,13 +92,12 @@ namespace RemoteKeycard
 
                 Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission)}");
 
-                
-                // if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
-                //     ev.IsAllowed = true;
+                if(!ev.IsAllowed && ev.Player.HasKeycardPermission(ev.Generator.Base._requiredPermission))
+                    ev.IsAllowed = true;
                 
             } catch(Exception e)
             {
-                if (_config.ShowExceptions) Log.Debug($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}");
+                if (_config.ShowExceptions) Log.Warn($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -123,13 +111,12 @@ namespace RemoteKeycard
 
                 Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions)}");
                 
-                // Certified sexiled moment true/false is flipped for this lmao
-                if(ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
-                    ev.IsAllowed = false;
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+                    ev.IsAllowed = true;
                 
             } catch(Exception e)
             {
-                if (_config.ShowExceptions) Log.Debug($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}");
+                if (_config.ShowExceptions) Log.Warn($"{nameof(OnLockerInteract)}: {e.Message}\n{e.StackTrace}");
             }
         }
     }

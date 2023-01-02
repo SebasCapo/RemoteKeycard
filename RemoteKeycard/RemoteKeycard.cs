@@ -22,13 +22,13 @@ namespace RemoteKeycard
         public override string Prefix => "remotekeycard";
 
         /// <inheritdoc/>
-        public override Version RequiredExiledVersion => new Version(6, 0, 0);
+        public override Version RequiredExiledVersion => new Version(6, 0, 0, 18);
 
         /// <inheritdoc/>
         public override string Author => "Beryl (Maintained by Parkeymon)";
 
         /// <inheritdoc/>
-        public override Version Version => new Version(3, 1, 4);
+        public override Version Version => new Version(3, 1, 5);
 
         /// <inheritdoc cref="EventsHandler"/>
         private EventsHandler Handler { get; set; }
@@ -41,10 +41,10 @@ namespace RemoteKeycard
         /// <inheritdoc/>
         public override void OnEnabled()
         {
-            if (Config.Debug) Log.Debug("Initializing events...");
+            Log.Debug("Initializing events...");
             Handler = new EventsHandler(Config);
             Handler.Start();
-            if (Config.Debug) Log.Debug("Events initialized successfully.");
+            Log.Debug("Events initialized successfully.");
 
             base.OnEnabled();
         }
@@ -52,10 +52,10 @@ namespace RemoteKeycard
         /// <inheritdoc/>
         public override void OnDisabled()
         {
-            if (Config.Debug) Log.Debug("Stopping events...");
+            Log.Debug("Stopping events...");
             Handler.Stop();
             Handler = null;
-            if (Config.Debug) Log.Debug("Events stopped successfully.");
+            Log.Debug("Events stopped successfully.");
 
             base.OnDisabled();
         }
