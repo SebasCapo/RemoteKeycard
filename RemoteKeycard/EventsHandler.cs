@@ -98,7 +98,7 @@ namespace RemoteKeycard
             } catch(Exception e)
             {
                 if (_config.ShowExceptions) Log.Warn($"{nameof(OnGeneratorUnlock)}: {e.Message}\n{e.StackTrace}");
-            }
+            } 
         }
 
         private void OnLockerInteract(InteractingLockerEventArgs ev)
@@ -111,7 +111,7 @@ namespace RemoteKeycard
 
                 Log.Debug($"Allowed: {ev.IsAllowed}, Permission?: {ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions)}");
                 
-                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions))
+                if(!ev.IsAllowed && ev.Chamber != null && ev.Player.HasKeycardPermission(ev.Chamber.RequiredPermissions, true))
                     ev.IsAllowed = true;
                 
             } catch(Exception e)
